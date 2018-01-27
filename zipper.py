@@ -9,6 +9,7 @@ ziphandle=zipfile.ZipFile(dir_name+'.zip', 'w', zipfile.ZIP_DEFLATED)
 for root, dirs, files in os.walk(os.getcwd()):
     for file in files: 
         f=os.path.join(root, file)
+        #we dont want the unprocessed zip file to be zipped so:
         if file==dir_name+'.zip' : continue
         ziphandle.write(f)
         print(str(f)+' added')
