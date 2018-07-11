@@ -34,7 +34,7 @@ def download_images(query, no_of_images):
     downloads = 1
     for i , (img_url , Type) in enumerate( ActualImages):
         try:
-            img = ulib.urlopen(img_url, context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)).read()
+            img = ulib.urlopen(img_url, context = ssl.SSLContext(ssl.PROTOCOL_TLSv1), timeout = 10).read() #timeout is important for moving on
         except Exception as e:
             print("could not load : ", i)
             print(e)
@@ -43,7 +43,6 @@ def download_images(query, no_of_images):
         if Type not in ['jpg', 'png']:
             Type='jpg'
         f = open('%s/%s.%s' %(query, downloads, Type), 'wb')
-        img = ulib.urlopen(img_url, context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)).read()
         f.write(img)
         f.close()
         if downloads >= no_of_images:
