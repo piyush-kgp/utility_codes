@@ -1,7 +1,6 @@
 '''
-Author: Piyush Singh
-Description: This script downloads google images results into neat folders
-Usage: python3 download_images_search.py 'X' 'Y' 'Z' N where X, Y, Z (and so on) are search terms and N is #images to be downloaded for each
+Description: This script downloads google images results into neat folders from command line
+Usage: python3 download_images_search_term.py 'X' 'Y' 'Z' N where X, Y, Z (and so on) are search terms and N is #images to be downloaded for each
 '''
 
 from bs4 import BeautifulSoup
