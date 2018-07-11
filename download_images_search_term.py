@@ -1,3 +1,9 @@
+'''
+Author: Piyush Singh
+Description: This script downloads google images results into neat folders
+Usage: python3 download_images_search.py 'X' 'Y' 'Z' N where X, Y, Z (and so on) are search terms and N is #images to be downloaded for each
+'''
+
 from bs4 import BeautifulSoup
 import urllib.request as ulib
 import os
@@ -9,7 +15,7 @@ def get_soup(url,header):
     gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)  # Only for gangstars
     return BeautifulSoup(ulib.urlopen(ulib.Request(url,headers=header), context = gcontext),"html.parser")
 
-def download_images(query, no_of_images=100):
+def download_images(query, no_of_images):
     gquery='+'.join(query.split())
     url="https://www.google.co.in/search?q="+gquery+"&source=lnms&tbm=isch"
     print(url)
@@ -21,13 +27,12 @@ def download_images(query, no_of_images=100):
     for ctr, a in enumerate(soup.find_all("div",{"class":"rg_meta"})):
         link , Type =json.loads(a.text)["ou"]  ,json.loads(a.text)["ity"]
         ActualImages.append((link,Type))
-        print(link, ctr)
+        # print(link, ctr)
 
     if not os.path.isdir(query):
         os.mkdir(query)
-    os.chdir(query)
 
-    downloads = []
+    downloads = 1
     for i , (img_url , Type) in enumerate( ActualImages):
         try:
             img = ulib.urlopen(img_url, context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)).read()
@@ -36,20 +41,26 @@ def download_images(query, no_of_images=100):
             print(e)
             continue
 
-        if Type=='':
+        if Type not in ['jpg', 'png']:
             Type='jpg'
-        f = open('%s.%s' %(i, Type), 'wb')
+        f = open('%s/%s.%s' %(query, downloads, Type), 'wb')
         img = ulib.urlopen(img_url, context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)).read()
         f.write(img)
         f.close()
-        downloads.append(i)
-        print('downloaded image #', i)
-    print('#Images downloaded = ', len(downloads))
+        if downloads >= no_of_images:
+            print('#Images downloaded = ', downloads-1)
+            return
+        print('downloaded image #', downloads)
+        downloads+=1
+
 
 
 if __name__=='__main__':
-    for search_term in sys.argv[1:]:
+    search_terms = sys.argv[1:-1]
+    no_of_images = sys.argv[-1]
+    print('\n\n# Images to be downloaded = %s\n\nSearch Terms = %s\n\n' %(no_of_images, search_terms))
+    for search_term in search_terms:
         print(search_term)
-        download_images(search_term)
+        download_images(search_term, int(no_of_images))
 
 
