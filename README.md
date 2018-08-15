@@ -1,2 +1,2 @@
-# utility_codes_python
-Utility codes written in python to make life simpler
+
+These scripts make my life simpler
