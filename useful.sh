@@ -3,14 +3,31 @@ countdown(){
 	echo "Enter Countdown time in seconds"
 	read secs
 	t1=(`date +%s`);
+	t2=(`date +%s`);
+	while [ "$((t1+secs-t2))" -ge 0 ];do
+		t2=(`date +%s`)
+		echo -ne "*************************"
+		echo -ne "$((secs-t2+t1)) seconds remaining"
+		echo -ne "*************************\r"
+		sleep 0.01
+	done
 	while true;do
 		t2=(`date +%s`)
-		echo -ne "$((secs-t2+t1))\r"
-		if [ "$((secs-t2+t1))" -le 0 ]
-		then
-			echo "TIME UP"
-			say "Your $secs seconds are over. Countdown is over"
-		fi
+		echo -ne "####################"
+		echo -ne "Countdown over. Running $((-secs+t2-t1)) seconds late"
+		echo -ne "####################\r"
+		say "Countdown over. Running $((-secs+t2-t1)) seconds late"
+	done
+}
+
+stopwatch(){
+	echo "Stopwatch Started"
+	t1=(`date +%s`);
+	while true;do
+		t2=(`date +%s`)
+		echo -ne "*************************"
+		echo -ne "$((t2-t1)) Seconds gone"
+		echo -ne "*************************\r"
 		sleep 0.1
 	done
 }
@@ -30,15 +47,3 @@ InternetConnectionCheck(){
 testInternetSpeed(){
 	curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
 }
-
-timer(){
-	echo "Timers Started"
-	t1=(`date +%s`);
-	while true;do
-		t2=(`date +%s`)
-		echo -ne "$((t2-t1)) Seconds\r"
-		sleep 0.1
-	done
-}
-
-
