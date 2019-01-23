@@ -1,4 +1,10 @@
-def sendMessage(toNumber='+91xxxxxxxxxx', msgbody="This is a test message.", account_sid = 'xxxxx', auth_token = 'xxxxx', fromNum='+1xxxxxxxxxx'):
+import sys
+NUM = sys.argv[1]
+SID = sys.argv[2]
+TOK = sys.argv[3]
+FRM = sys.argv[4]
+
+def sendMessage(toNumber=NUM, msgbody="This is a test message.", account_sid=SID, auth_token=TOK, fromNum=FRM):
     from twilio.rest import Client
     account_sid = account_sid
     auth_token = auth_token
