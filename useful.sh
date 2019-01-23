@@ -4,6 +4,7 @@ countdown(){
 	read secs
 	t1=(`date +%s`);
 	t2=(`date +%s`);
+	speak_interval=30;
 	while [ "$((t1+secs-t2))" -ge 0 ];do
 		t2=(`date +%s`)
 		echo -ne "*************************"
@@ -11,12 +12,19 @@ countdown(){
 		echo -ne "*************************\r"
 		sleep 0.01
 	done
+	say "Countdown is over"
 	while true;do
 		t2=(`date +%s`)
+		late=$((-secs+t2-t1))
+		mod=$((late % speak_interval))
 		echo -ne "####################"
 		echo -ne "Countdown over. Running $((-secs+t2-t1)) seconds late"
 		echo -ne "####################\r"
-		say "Countdown over. Running $((-secs+t2-t1)) seconds late"
+		if [ $((mod)) -le 2 ]
+		then
+			say "Countdown over. Running $((-secs+t2-t1)) seconds late"
+		fi
+		sleep 0.01
 	done
 }
 
