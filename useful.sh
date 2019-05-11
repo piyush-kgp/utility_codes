@@ -55,3 +55,9 @@ InternetConnectionCheck(){
 testInternetSpeed(){
 	curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
 }
+
+# mailing
+# apt-get install mailutils ssmtp
+# update /etc/ssmtp/ssmtp.conf a/c to https://unix.stackexchange.com/questions/36982/can-i-set-up-system-mail-to-use-an-external-smtp-server
+# free -m | mail -s "memory usage" to@email.id
+# you'll need to allow less secure apps in your account security options.
