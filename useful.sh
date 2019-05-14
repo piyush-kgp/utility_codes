@@ -58,6 +58,23 @@ testInternetSpeed(){
 
 # mailing
 # apt-get install mailutils ssmtp
-# update /etc/ssmtp/ssmtp.conf a/c to https://unix.stackexchange.com/questions/36982/can-i-set-up-system-mail-to-use-an-external-smtp-server
-# free -m | mail -s "memory usage" to@email.id
-# you'll need to allow less secure apps in your account security options.
+# update your file at /etc/ssmtp/ssmtp.conf as per instructions from https://unix.stackexchange.com/questions/36982/can-i-set-up-system-mail-to-use-an-external-smtp-server
+# echo "test message" | mail -s "test msg" to@email.id
+# you'll need to allow less secure apps in your google account security options.
+
+# To do monitoring such as send a mail whenever ram usage crosses 90%, check every 5 minutes:
+# your bash script should read from /proc/meminfo and look at the fields MemTotal and MemFree. Calculate ram usage, then 
+# create the mail body and use the `mail` command to send mail. Schedule it on your cron as */5 * * * * *
+
+
+# git add, commit and push
+# # for some reason this doesnt work so I had to do it in a function
+# alias cps="git add . && git commit -m \"$1\" && git push -u origin master"
+
+cpsh(){
+	echo "Enter commit message"
+	read "msg"
+	commit_msg="\"$msg\""
+	cmd="git add . && git commit -m $commit_msg && git push -u origin master"
+	eval $cmd
+}
